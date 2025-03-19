@@ -51,5 +51,5 @@ Para poder medir los costos en relación al tiempo, se genera un gráfico que se
 
 ```cpp
 cd .\test\
-python .graficos.py
+python graficos.py
 ```
