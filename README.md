@@ -20,7 +20,7 @@ g++ AlgoritmoCompleto.cpp -o AlgoritmoCompleto
 2. Para la heurística:
 
 ```cpp
-g++ Heuristica.cpp -o Heuristica.exe
+g++ Heuristica.cpp -o Heuristica
 ```
 
 ---
