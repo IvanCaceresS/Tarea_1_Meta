@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <climits>
 
 using namespace std;
+using namespace std::chrono;
 
 const int N = 15; // Número de comunas
 vector<int> costo = {60, 30, 60, 70, 130, 60, 70, 60, 80, 70, 50, 90, 30, 30, 100}; // Costos de construccion
@@ -24,11 +27,12 @@ vector<vector<int>> cobertura = {
     {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, // 13 ESTÁ BIEN
     {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1}, // 14 ESTÁ BIEN
     {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1}  // 15 ESTÁ BIEN
-}; // Cobertura de cada comuna como matriz 15x15
+};
 
 vector<int> x(N, 0); // Vector para las decisiones (0 o 1), que comuna se construye o no
 vector<vector<int>> soluciones; // Para almacenar todas las soluciones válidas
 int mejor_costo = INT_MAX; // Para almacenar el costo de la mejor solucion
+int nodos_visitados = 0; // Contador de nodos explorados
 
 // Funcion para calcular el costo total
 int costo_total() {
@@ -51,13 +55,14 @@ bool es_cubierta(int comuna) {
     return false;
 }
 
-// Funcion recursiva de backtracking
+
 void backtracking(int idx) {
+    nodos_visitados++; // Contar nodos visitados
     if (idx == N) {  // Si todas las comunas han sido evaluadas
         bool todasCubiertas = true;
         for (int i = 0; i < N; ++i) {
             if (!es_cubierta(i)) { // Verificar que todas las comunas estén cubiertas
-                todasCubiertas = false;
+                todasCubiertas = false; // Si alguna comuna no está cubierta, salir del ciclo
                 break;
             }
         }
@@ -86,18 +91,24 @@ void backtracking(int idx) {
 }
 
 int main() {
-    backtracking(0);
+    auto inicio = high_resolution_clock::now();
 
+    backtracking(0);
+    
+    auto fin = high_resolution_clock::now();
+    auto duracion = duration_cast<milliseconds>(fin - inicio);
+
+    // Mostrar resultados
     if (!soluciones.empty()) {
         cout << "Se encontraron soluciones!" << endl;
         cout << "Costo total de la mejor solucion: " << mejor_costo << endl;
+        cout << "Tiempo de ejecucion: " << duracion.count() << " milisegundos" << endl;
+        cout << "Nodos visitados en el arbol: " << nodos_visitados << endl;
         cout << "Las soluciones son:" << endl;
         for (const auto& sol : soluciones) {
-            cout << "Comunas con centro de vacunacion: ";
+            cout << "Comunas con centro: ";
             for (int i = 0; i < N; ++i) {
-                if (sol[i] == 1) {
-                    cout << i + 1 << " ";  // Comuna i+1
-                }
+                if (sol[i] == 1) cout << i+1 << " ";
             }
             cout << endl;
         }
