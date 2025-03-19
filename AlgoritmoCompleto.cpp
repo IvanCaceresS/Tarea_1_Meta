@@ -8,7 +8,6 @@ using namespace std::chrono;
 
 const int N = 15; // Número de comunas
 vector<int> costo = {60, 30, 60, 70, 130, 60, 70, 60, 80, 70, 50, 90, 30, 30, 100}; // Costos de construccion
-
 // Matriz de cobertura 15x15 donde la fila i indica si la comuna i cubre a las comunas j (1 para cubrir, 0 para no cubrir)
 vector<vector<int>> cobertura = {
 //   1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
