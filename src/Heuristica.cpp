@@ -77,11 +77,12 @@ bool es_cubierta(int comuna) {
 }
 
 void backtracking_heuristic(int idx, const vector<int>& orden, int costo_actual = 0) {
-    nodos_visitados++; // Incrementar nodos visitados
+    
 
     if (costo_actual >= mejor_costo) return;
 
     if (idx == N) {
+        nodos_visitados++; // Incrementar nodos visitados
         bool todas_cubiertas = true;
         for (int i = 0; i < N; ++i) {
             if (!es_cubierta(i)) {

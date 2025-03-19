@@ -51,9 +51,9 @@ bool es_cubierta(int comuna) {
 }
 
 void backtracking(int idx) {
-    nodos_visitados++; // Incrementar nodos visitados
-
+    
     if (idx == N) {
+        nodos_visitados++; // Incrementar nodos visitados
         bool todas_cubiertas = true;
         for (int i = 0; i < N; ++i) {
             if (!es_cubierta(i)) {
