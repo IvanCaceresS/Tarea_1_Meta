@@ -33,7 +33,7 @@ vector<vector<int>> soluciones;
 int mejor_costo = INT_MAX;
 int nodos_visitados = 0; // Contador de nodos
 steady_clock::time_point inicio_tiempo;
-ofstream salida("../output/completa.csv");
+ofstream salida("output/completa.csv");
 
 int costo_total() {
     int total = 0;

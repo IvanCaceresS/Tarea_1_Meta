@@ -13,9 +13,8 @@ g++ src/Heuristica.cpp -o Algoritmos/Heuristica.exe
 
 ## *Correr algoritmos* ⚙️
 Una vez buildeado el script, ejecutar en orden:
-Dentro de Algoritmos
-.\AlgoritmoCompleto.exe
-.\Heuristica.exe
+.\Algoritmos\AlgoritmoCompleto.exe
+.\Algoritmos\Heuristica.exe
 
 ## *Graficos*
 python .\test\graficos.py

@@ -36,7 +36,7 @@ vector<vector<int>> soluciones;
 int mejor_costo = INT_MAX;
 int nodos_visitados = 0; // Contador de nodos
 steady_clock::time_point inicio_tiempo;
-ofstream salida("../output/heuristica.csv");
+ofstream salida("output/heuristica.csv");
 
 struct Comuna {
     int idx;
