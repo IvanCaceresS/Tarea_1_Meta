@@ -4,9 +4,11 @@
 #include <climits>
 #include <fstream>
 #include <sstream>
+#include <filesystem> // Para manejo de directorios
 
 using namespace std;
 using namespace std::chrono;
+namespace fs = std::filesystem; // Alias para simplificar
 
 const int N = 15;
 vector<int> costo = {60, 30, 60, 70, 130, 60, 70, 60, 80, 70, 50, 90, 30, 30, 100};
@@ -33,7 +35,7 @@ vector<vector<int>> soluciones;
 int mejor_costo = INT_MAX;
 int nodos_visitados = 0; // Contador de nodos
 steady_clock::time_point inicio_tiempo;
-ofstream salida("output/completa.csv");
+ofstream salida;
 
 int costo_total() {
     int total = 0;
@@ -81,6 +83,21 @@ void backtracking(int idx) {
 }
 
 int main() {
+    // Ruta de la carpeta '../output'
+    string output_folder = "../output";
+
+    // Crear la carpeta '../output' si no existe
+    if (!fs::exists(output_folder)) {
+        fs::create_directory(output_folder);
+    }
+
+    // Abrir el archivo CSV en '../output/completa.csv'
+    salida.open(output_folder + "/completa.csv");
+    if (!salida.is_open()) {
+        cerr << "Error al abrir el archivo CSV." << endl;
+        return 1;
+    }
+
     inicio_tiempo = steady_clock::now();
     salida << "Tiempo(ms),Costo" << endl;
     backtracking(0);
@@ -88,7 +105,7 @@ int main() {
 
     // Leer último tiempo del CSV
     double ultimo_tiempo = 0.0;
-    ifstream entrada("completa.csv");
+    ifstream entrada(output_folder + "/completa.csv");
     string linea;
     while (getline(entrada, linea)) {
         if (linea.empty() || linea.find("Tiempo") != string::npos) continue;

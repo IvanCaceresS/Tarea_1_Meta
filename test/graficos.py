@@ -1,9 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os  # Para manejo de directorios
+
+# Ruta de la carpeta 'output'
+output_folder = "../output"
+
+# Crear la carpeta 'output' si no existe
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
 # Leer archivos
-df_completa = pd.read_csv("output/completa.csv")
-df_heuristica = pd.read_csv("output/heuristica.csv")
+df_completa = pd.read_csv(os.path.join(output_folder, "completa.csv"))
+df_heuristica = pd.read_csv(os.path.join(output_folder, "heuristica.csv"))
 
 # Obtener últimos tiempos
 ultimo_tiempo_heu = df_heuristica["Tiempo(ms)"].max()
@@ -36,5 +44,5 @@ plt.ylim(150, 1000)  # Ajustar para mejor visualización
 
 # Guardar y mostrar
 plt.tight_layout()
-plt.savefig('Graficos/comparacion_final.png', dpi=300)
+plt.savefig(os.path.join(output_folder, 'costvstime.png'), dpi=300)
 plt.show()
