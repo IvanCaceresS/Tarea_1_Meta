@@ -6,6 +6,7 @@
 #include <numeric>
 #include <cmath>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 using namespace std::chrono;
@@ -33,6 +34,7 @@ vector<vector<int>> cobertura = {
 vector<int> x(N, 0);
 vector<vector<int>> soluciones;
 int mejor_costo = INT_MAX;
+int nodos_visitados = 0; // Contador de nodos
 steady_clock::time_point inicio_tiempo;
 ofstream salida("../output/heuristica.csv");
 
@@ -73,6 +75,8 @@ bool es_cubierta(int comuna) {
 }
 
 void backtracking_heuristic(int idx, const vector<int>& orden, int costo_actual = 0) {
+    nodos_visitados++; // Incrementar nodos visitados
+
     if (costo_actual >= mejor_costo) return;
 
     if (idx == N) {
@@ -85,8 +89,10 @@ void backtracking_heuristic(int idx, const vector<int>& orden, int costo_actual 
         }
         if (todas_cubiertas && costo_actual < mejor_costo) {
             auto ahora = steady_clock::now();
-            double tiempo = duration<double>(ahora - inicio_tiempo).count() * 1000; // Milisegundos con decimales
+            double tiempo = duration<double>(ahora - inicio_tiempo).count() * 1000;
             mejor_costo = costo_actual;
+            soluciones.clear();
+            soluciones.push_back(x);
             salida << tiempo << "," << mejor_costo << endl;
         }
         return;
@@ -106,5 +112,32 @@ int main() {
     salida << "Tiempo(ms),Costo" << endl;
     backtracking_heuristic(0, orden, 0);
     salida.close();
+
+    // Leer último tiempo del CSV
+    double ultimo_tiempo = 0.0;
+    ifstream entrada("heuristica.csv");
+    string linea;
+    while (getline(entrada, linea)) {
+        if (linea.empty() || linea.find("Tiempo") != string::npos) continue;
+        stringstream ss(linea);
+        string tiempo_str;
+        getline(ss, tiempo_str, ',');
+        ultimo_tiempo = stod(tiempo_str);
+    }
+
+    // Mostrar resultados por consola
+    cout << "\n=== RESULTADOS HEURÍSTICA ===" << endl;
+    cout << "- Nodos visitados: " << nodos_visitados << endl;
+    cout << "- Tiempo total: " << ultimo_tiempo << " ms" << endl;
+    cout << "- Mejor costo: " << mejor_costo << endl;
+    cout << "- Solucion(es):" << endl;
+    for (const auto& sol : soluciones) {
+        cout << "  Comunias: ";
+        for (int i = 0; i < N; ++i) {
+            if (sol[i] == 1) cout << i + 1 << " ";
+        }
+        cout << endl;
+    }
+
     return 0;
 }
