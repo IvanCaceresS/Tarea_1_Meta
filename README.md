@@ -41,7 +41,7 @@ Luego para cada algoritmo:
 
 2. Para la heurística:
 ```cpp
-.Heuristica.exe
+.\Heuristica.exe
 ```
 
 ---
