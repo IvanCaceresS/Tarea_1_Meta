@@ -31,7 +31,7 @@ vector<int> x(N, 0);
 vector<vector<int>> soluciones;
 int mejor_costo = INT_MAX;
 steady_clock::time_point inicio_tiempo;
-ofstream salida("completa.csv");
+ofstream salida("../output/completa.csv");
 
 int costo_total() {
     int total = 0;

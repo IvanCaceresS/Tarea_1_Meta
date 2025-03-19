@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Leer archivos individuales
-df_completa = pd.read_csv("../Algoritmos/completa.csv")
-df_heuristica = pd.read_csv("../Algoritmos/heuristica.csv")
+df_completa = pd.read_csv("../output/completa.csv")
+df_heuristica = pd.read_csv("../output/heuristica.csv")
 
 # Unir datos usando el tiempo como índice
 df_completa = df_completa.rename(columns={"Costo": "Completa"})
