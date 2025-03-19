@@ -149,7 +149,7 @@ int main() {
     cout << "- Mejor costo: " << mejor_costo << endl;
     cout << "- Solucion(es):" << endl;
     for (const auto& sol : soluciones) {
-        cout << "  Comunias: ";
+        cout << "  Comunas: ";
         for (int i = 0; i < N; ++i) {
             if (sol[i] == 1) cout << i + 1 << " ";
         }
